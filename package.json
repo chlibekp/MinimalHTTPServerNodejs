@@ -1,0 +1,32 @@
+{
+  "name": "minimalhttpservernodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chlibekp/MinimalHTTPServerNodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chlibekp/MinimalHTTPServerNodejs/issues"
+  },
+  "homepage": "https://github.com/chlibekp/MinimalHTTPServerNodejs#readme",
+  "description": "",
+  "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "@jest/types": "^30.2.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "typed-emitter": "^2.1.0"
+  }
+}
