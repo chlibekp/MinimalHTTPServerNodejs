@@ -11,10 +11,9 @@ function parseHeaders(lines: string[]): Headers {
 
 class HTTPHeaders {
 	private headers: Headers = {};
-	constructor(headersRaw: string[]) {
-		this.headers = parseHeaders(headersRaw);		
+	constructor(headersRaw?: string[]) {
+		this.headers = headersRaw ? parseHeaders(headersRaw) : {};		
 	}
-
 	getAll() : Headers {
 		return this.headers;
 	}

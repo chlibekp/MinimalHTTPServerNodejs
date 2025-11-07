@@ -1,9 +1,11 @@
 import TypedEmitter from 'typed-emitter';
-import EventEmitter from 'node:events';
-import { HTTPServerEvents } from '../types/http.ts'; 
-import TCPServer from '../tcp/server.ts';
+import EventEmitter from 'events';
+import { HTTPServerEvents } from '../types/http'; 
+import TCPServer from '../tcp/server';
 import net from 'node:net';
-import RequestFactory from './requestFactory.ts';
+import RequestFactory from './requestFactory';
+import ResponseFactory from './responseFactory';
+import HTTPHeaders from './headers';
 
 class HTTPServer extends (EventEmitter as new () => TypedEmitter<HTTPServerEvents>) {
 	tcpServer: TCPServer;
@@ -28,8 +30,6 @@ class HTTPServer extends (EventEmitter as new () => TypedEmitter<HTTPServerEvent
 			const request = new RequestFactory()
 				.setBuffer(data)
 				.build();
-
-			console.log(request)
 		});
 	}
 }
