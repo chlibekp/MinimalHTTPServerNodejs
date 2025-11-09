@@ -28,6 +28,7 @@ class HTTPServer extends (EventEmitter as new () => TypedEmitter<HTTPServerEvent
 	}
 
 	route(method: string, path: string, handler: (req: RequestFactory, res: ResponseFactory) => void) {	
+		// Store the route handler in the routes map
 		this.routes.set(`${method}${path}`, handler);
 	}
 
@@ -36,12 +37,28 @@ class HTTPServer extends (EventEmitter as new () => TypedEmitter<HTTPServerEvent
 			const request = new RequestFactory()
 				.setBuffer(data)
 				.build();
-			const url = new URL(`http://localhost${request.path}`)
-			const callback = this.routes.get(`${request.method}${url.pathname}`)
+			// Get the path without query parameters
+			const [path] = request.path.split("?");
+			const callback = this.routes.get(`${request.method}${path}`)
+
+			const response = new ResponseFactory(socket);
+
+			// If no route is found, return 404
+			if(!callback){
+				response.writeHeader(404);
+				const headers = new HTTPHeaders();
+				headers.set("Content-Type", "text/plain");
+				response.sendHeaders(headers)
+				response.write("Not Found");
+				response.end();
+				return;
+			}
+
+			// Call the route handler
 			try {
 				callback?.(request, new ResponseFactory(socket))
 			} catch (error) {
-				const response = new ResponseFactory(socket);
+				// Handle any errors in the route handler
 				response.writeHeader(500);
 				const headers = new HTTPHeaders();
 				headers.set("Content-Type", "text/plain");
