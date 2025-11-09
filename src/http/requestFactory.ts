@@ -16,11 +16,11 @@ class RequestFactory {
 		const bodyStartIndex = this.buffer.indexOf('\r\n\r\n');
 		// Extract the head (request line + headers)
 		const head = bodyStartIndex == -1 ? this.buffer.toString() : this.buffer.subarray(0, bodyStartIndex).toString();
-		const [RequestLineRaw, ...headersRaw] = head.split("\r\n");
+		const [requestLineRaw, ...headersRaw] = head.split("\r\n");
 
 		// Parse the request line
 		const headers = new HTTPHeaders(headersRaw);
-		const firstLine = new HTTPRequestLine(RequestLineRaw);
+		const firstLine = new HTTPRequestLine(requestLineRaw);
 
 		// Create new HTTPRequest
 		const httpRequest = new HTTPRequest({
